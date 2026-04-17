@@ -1,7 +1,95 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, ChartLineUp, Target, TrendUp } from "@phosphor-icons/react";
+
+function HeroSkeleton() {
+  return (
+    <section className="min-h-[100dvh] flex items-center pt-20 pb-16 px-6 relative overflow-hidden">
+      {/* Background ambient */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-accent/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-zinc-800/50 rounded-full blur-[80px]" />
+      </div>
+
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+        {/* Left: Content Skeleton */}
+        <div className="space-y-6">
+          {/* Badge skeleton */}
+          <div className="inline-block">
+            <div className="h-7 w-40 bg-zinc-800 rounded-full animate-pulse" />
+          </div>
+
+          {/* Heading skeleton */}
+          <div className="space-y-4">
+            <div className="h-14 md:h-16 xl:h-20 w-full max-w-md bg-zinc-800 rounded-lg animate-pulse" />
+            <div className="h-14 md:h-16 xl:h-20 w-4/5 max-w-md bg-zinc-800 rounded-lg animate-pulse" />
+            <div className="h-14 md:h-16 xl:h-20 w-3/5 max-w-md bg-zinc-800 rounded-lg animate-pulse" />
+          </div>
+
+          {/* Description skeleton */}
+          <div className="space-y-3 pt-2">
+            <div className="h-5 w-full max-w-[52ch] bg-zinc-800 rounded animate-pulse" />
+            <div className="h-5 w-4/5 max-w-[52ch] bg-zinc-800 rounded animate-pulse" />
+          </div>
+
+          {/* Buttons skeleton */}
+          <div className="flex flex-col sm:flex-row gap-4 pt-4">
+            <div className="h-12 w-full sm:w-56 bg-zinc-800 rounded-lg animate-pulse" />
+            <div className="h-12 w-full sm:w-40 bg-zinc-800 rounded-lg animate-pulse" />
+          </div>
+        </div>
+
+        {/* Right: Visual Skeleton */}
+        <div className="hidden lg:flex justify-center items-center">
+          <div className="relative w-full max-w-md mx-auto">
+            {/* Main card skeleton */}
+            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8">
+              <div className="space-y-6">
+                {/* Live badge skeleton */}
+                <div className="h-4 w-32 bg-zinc-800 rounded animate-pulse" />
+
+                {/* Big number skeleton */}
+                <div className="space-y-2">
+                  <div className="h-12 w-24 bg-zinc-800 rounded animate-pulse" />
+                  <div className="h-3 w-36 bg-zinc-800 rounded animate-pulse" />
+                </div>
+
+                {/* Chart skeleton */}
+                <div className="flex items-end gap-1.5 h-16">
+                  {[35, 52, 41, 67, 48, 78, 93, 71, 85, 94].map((h, i) => (
+                    <div
+                      key={i}
+                      style={{ height: `${h}%` }}
+                      className="flex-1 bg-zinc-800 rounded-sm animate-pulse"
+                    />
+                  ))}
+                </div>
+
+                {/* Stats skeleton */}
+                <div className="pt-4 border-t border-zinc-800 grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <div className="h-6 w-16 bg-zinc-800 rounded animate-pulse" />
+                    <div className="h-3 w-20 bg-zinc-800 rounded animate-pulse" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-6 w-16 bg-zinc-800 rounded animate-pulse" />
+                    <div className="h-3 w-20 bg-zinc-800 rounded animate-pulse" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating badges skeleton */}
+            <div className="absolute -right-4 top-8 h-12 w-32 bg-zinc-800 border border-zinc-700 rounded-xl animate-pulse" />
+            <div className="absolute -left-4 bottom-8 h-12 w-40 bg-zinc-800 border border-zinc-700 rounded-xl animate-pulse" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function VisualElement() {
   return (
@@ -78,6 +166,21 @@ function VisualElement() {
 }
 
 export default function Hero() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate content loading
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <HeroSkeleton />;
+  }
+
   return (
     <section className="min-h-[100dvh] flex items-center pt-20 pb-16 px-6 relative overflow-hidden">
       {/* Background ambient */}
